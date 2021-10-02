@@ -1,0 +1,9 @@
+{% block content %}
+<div class = 'container'>
+    <p>Are you sure</p>
+    <form method="post">
+        {% csrf_token %}
+        <button class = 'btn btn-danger' type ='submit'>DELETE</button>
+    </form>
+</div>
+{% endblock %}
