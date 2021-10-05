@@ -24,15 +24,15 @@
         <div class="row align-items-center justify-content-center d-flex">
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
-                    {% if user.is_authenticated %}
+                    { if user.is_authenticated }
                     <li class="menu-active"><a href="{% url 'index' %}">Home</a></li>
-                    <li><a href = "#">Create Post</a></li>
+                    <li><a href = "{% url 'create' %}">Create Post</a></li>
                     <li><a href = "#">Logout</a></li>
                     <li>| <a href = "#">{{ user.username }}</a></li>
-                    {% else %}
+                    { else }
                     <li><a href ="#">Login</a></li>
                     <li><a href ="#">Registration</a></li>
-                    {% endif %}
+                    { endif }
                 </ul>
             </nav>
         </div>

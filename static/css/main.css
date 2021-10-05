@@ -48,6 +48,7 @@ body {
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
+  background-color: burlywood;
   position: relative; }
 
 ol,
@@ -1606,7 +1607,7 @@ h6 {
       display: none; } }
 
 #header.header-scrolled {
-  background: red;
+  background:purple;
   transition: all 0.5s;
   margin-top: 0; }
   #header.header-scrolled .nav-menu a {
