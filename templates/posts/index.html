@@ -1,32 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLOG</title>
-</head>
-<body>
-    {% for post in posts %} 
-    <div class="col-lg-6 col-md-6"> 
-        <div class="single-post-item"> 
-            <div class="post-thumb"> 
-                <div class="post-details"> 
-                    <h4><a href="#">{{ post.title }}</a></h4> 
-                    <p>{{ post.text|truncatewords:10 }}</p> 
-                    <div class="blog-meta"> 
-                        <a href="#" class="m-gap">
-                        <span class="lnr lnr-calendar-full"></span>{{ post.creat_at }}</a> 
-                        <a href="#" class="m-gap">
-                        <div class="container"> <a href="{% url 'update' post.id %}"> 
-                            <button class="btn btn-success">Update</button> </a> 
-                            <a href="{% url 'delete' post.id %}"> 
-                            <button class="btn btn-danger">Delete</button> </a> 
-                        </div>
-                </div> 
-            </div> 
-        </div> 
+{% extends 'index.html' %}
+{% block content %}
+{% for post in posts %}
+<div class="col-lg-6 col-md-6">
+    <div class="single-post-item">
+        <div class="post-thumb">
+            {% if post.image %}
+            <img class="img-fluid" src="{{ post.image.url }}" alt="">
+            {% else %}
+            <img class="img-fluid" src="..." alt="">
+            {% endif %}
+        </div>
+        <div class="post-details">
+            <h4><a href="{% url 'detail' post.id %}">{{ post.title }}</a></h4>
+            <p>{{ post.text|truncatewords:10 }}</p>
+            <div class="blog-meta">
+                <a href="#" class="m-gap"><span class="lnr lnr-calendar-full"></span>{{ post.create_at }}</a>
+            </div>
+        </div>
     </div>
-    {% endfor %}
-</body>
-</html>
+</div>
+{% endfor %}
+{% endblock %}
