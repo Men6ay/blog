@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Profile
+from users.models import Profile
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
@@ -35,7 +35,7 @@ def login_user(request):
             user = User.objects.get(username=username)
             user = authenticate(username=username, password=password)
             login(request, user)
-            redirect('index')
+            return redirect('index')
         except:
             messages.error(request, 'Не правильный логин или пароль')
     return render(request, 'users/login.html')

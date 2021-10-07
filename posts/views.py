@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from posts.models import Post
+from tags.models import Tags
 
 def index(request):
     posts = Post.objects.all()
@@ -10,7 +11,15 @@ def create(request):
         title = request.POST.get('title')
         text = request.POST.get('text')
         file = request.FILES.get('file')
-        post_obj = Post.objects.create(title = title, text = text,image=file)
+        tags = request.POST.get('tags')
+        post_obj = Post.objects.create(user=request.user,title = title, text = text,image=file)
+        if len(tags) != 0:
+            try:
+                tags_get = Tags.objects.get(title = tags)
+                tags_get.posts.add(post_obj)
+            except:
+                tags_obj = Tags.objects.create(title=tags)
+                tags_get.posts.add(post_obj)
         return redirect('index')    
     return render(request, 'posts/create.html')
 

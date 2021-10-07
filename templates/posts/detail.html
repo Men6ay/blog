@@ -6,11 +6,16 @@
             <img class="img-fluid" src="{{ posts.image.url }}" alt="">
             <h4>{{ posts.title }}</h4>
             <div class="user_details">
+                <div class="float-left">
+                    {% for tag in posts.tag_set.all %}
+                        <a href="{% url 'detail_tag' tag.id %}">{{ tag.title }}</a>
+                    {% endfor %}
+                </div>
                 <div class="float-right">
                     <div class="media">
                         <div class="media-body">
-                            <h5> posts.user</h5>
-                            <p>{{ posts.crate_at }}</p>
+                            <h5>{{ posts.user }}</h5>
+                            <p>{{ posts.creat_at }}</p>
                         </div>
                         <div class="d-flex">
                             <img src="{% static 'img/blog/user-img.jpg' %}" alt="">
@@ -22,10 +27,10 @@
             <hr>
             {% if user.is_authenticated %}
                 <div class="container">
-                    <a href="{% url 'update_data' posts.id %}">
+                    <a href="{% url 'update' posts.id %}">
                         <button class="btn btn-success">Update</button>
                     </a>
-                    <a href="{% url 'delete_data' posts.id %}">
+                    <a href="{% url 'delete' posts.id %}">
                         <button class="btn btn-danger">Delete</button>
                     </a>
 

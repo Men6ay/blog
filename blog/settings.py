@@ -40,7 +40,8 @@ INSTALLED_APPS = [
 
     #apps
     'posts',
-    'users'
+    'users',
+    'tags',
 ]
 
 MIDDLEWARE = [
