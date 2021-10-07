@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from posts.models import Post
-from tags.models import Tags
+from tags.models import Tag
 
 def index(request):
     posts = Post.objects.all()
@@ -18,7 +18,7 @@ def create(request):
                 tags_get = Tags.objects.get(title = tags)
                 tags_get.posts.add(post_obj)
             except:
-                tags_obj = Tags.objects.create(title=tags)
+                tags_get = Tags.objects.create(title=tags)
                 tags_get.posts.add(post_obj)
         return redirect('index')    
     return render(request, 'posts/create.html')
