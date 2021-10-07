@@ -20,7 +20,7 @@ def signup(request):
                 Profile.objects.create(user = user, nickname = nickname, image = image)
                 user = authenticate(username = username, password = password1)
                 login(request, user)
-                return redirect('data')
+                return redirect('index')
             except:
                 messages.error(request, 'Такой логин существует')
         else:
@@ -35,7 +35,7 @@ def login_user(request):
             user = User.objects.get(username=username)
             user = authenticate(username=username, password=password)
             login(request, user)
-            redirect('data')
+            redirect('index')
         except:
             messages.error(request, 'Не правильный логин или пароль')
     return render(request, 'users/login.html')
