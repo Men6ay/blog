@@ -9,16 +9,16 @@ def signup(request):
         username = request.POST.get('username')
         nickname = request.POST.get('nickname')
         image = request.FILES.get('image')
-        password_1 = request.POST.get('password_1')
-        password_2 = request.POST.get('password_2')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
         print(image)
-        if password_1 == password_2:
+        if password1 == password2:
             try:
                 user = User.objects.create(username = username)
-                user.set_password(password_1)
+                user.set_password(password1)
                 user.save()
                 profile = Profile.objects.create(user = user, nickname=nickname,image=image)
-                user = authenticate(username=username,password = password_1)
+                user = authenticate(username=username,password = password1)
                 login(request,user)
                 return redirect('index')
             except:
@@ -42,4 +42,4 @@ def login(request):
 
 def profile(request,id):
     profiles = Profile.objects.get(user__id =id)
-    return render(request, 'users/profile.html', {'profiles':profiles})
+    return render(request, 'users/profile.html', {'profile':profiles})
