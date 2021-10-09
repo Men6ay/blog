@@ -5,6 +5,17 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{ tag.title }}</h5>
+          {% if user.is_authenticated %}
+                <div class="container">
+                    <a href="{% url 'update_tag' tag.id %}">
+                        <button class="btn btn-success">Update</button>
+                    </a>
+                    <a href="{% url 'delete_tag' tag.id %}">
+                        <button class="btn btn-danger">Delete</button>
+                    </a>
+                </div>
+            {% else %}
+            {% endif %}
         </div>
       </div>
     </div>
