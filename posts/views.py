@@ -1,10 +1,16 @@
+from django.db.models.query import RawQuerySet
 from django.shortcuts import render,redirect
-from posts.models import Post
+from posts.models import Post,Like
 from tags.models import Tag
 from comments.models import Comment
+from django.db.models import Q
 
 def index(request):
-    posts = Post.objects.all()
+    if 'key_word' in request.GET:
+        key = request.GET.get('words')
+        posts = Post.objects.filter(Q(title__icontains=key) | Q(user__username__icontains=key))
+    else:
+        posts = Post.objects.all()
     return render(request, 'posts/index.html', {'posts':posts})
 
 def create(request):
@@ -62,4 +68,10 @@ def detail(request,id):
                 return redirect('index')
             except:
                 print('Error')
+        if 'like' in request.POST:
+            try:
+                like = Like.objects.get(user=request.user,post = posts)
+                like.delete()
+            except:
+                Like.objects.create(user = request.user, post=posts)
     return render(request, 'posts/detail.html', {"posts":posts})

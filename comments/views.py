@@ -1,10 +1,18 @@
-from django.shortcuts import render
-from posts.models import Post
+from django.shortcuts import redirect, render
 from comments.models import Comment
 
-def comment_index(request,id):
-    post_obj = Post.objects.get(id=id)
-    comments = post_obj.comment.all()
-    return render(request, 'comments/index.html', {'comments':comments})
+def update_comment(request, id):
+    comment = Comment.objects.get(id=id)
+    if request.method == 'POST':
+        text = request.POST.get('text')
+        comment.text = text
+        comment.save()
+        return redirect('index')
+    return render(request, 'comments/update.html')
 
-
+def delete_comment(request,id):
+    comment = Comment.objects.get(id=id)
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('index')
+    return render(request, 'comments/delete.html')

@@ -33,13 +33,29 @@
                     <a href="{% url 'delete' posts.id %}">
                         <button class="btn btn-danger">Delete</button>
                     </a>
-
                 </div>
             {% else %}
             {% endif %}
-        </div>
+            <div class="news_d_footer">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="like">
+                    <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-heart-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                        </svg>
+                    </button>
+                </form>
+                <div class="ml-3">
+                    </i>{{ posts.like_post.all.count }} people like this
+                </div>
+                <a class="justify-content-center ml-auto" href="#">
+                    <i class="lnr lnr lnr-bubble"></i>{{ posts.comment.all.count }}
+                    Comments</a>
+            </div>
         <div class="comments-area">
-            <h4>{{ posts.comment.all.count}} Comments</h4>
             {% for comment in posts.comment_post.all %}
                 <div class="comment-list">
                     <div class="single-comment justify-content-between d-flex">
@@ -53,6 +69,17 @@
                                 <p class="comment">
                                     {{ comment.text }}
                                 </p>
+                                {% if user.is_authenticated %}
+                                    <div class="container">
+                                    <a href="{% url 'update_comment' comment.id %}">
+                                        <button class="btn btn-success">Update</button>
+                                    </a>
+                                    <a href="{% url 'delete_comment' comment.id %}">
+                                        <button class="btn btn-danger">Delete</button>
+                                    </a>
+                                    </div>
+                                {% else %}
+                                {% endif %}
                             </div>
                         </div>
                     </div>

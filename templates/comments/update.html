@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+{% block content  %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="container">
+        <div class="mb-3">
+            <label for="formGroupExampleInput2" class="form-label">Text</label>      
+            <input type="text" name="text" class="form-control" id="formGroupExampleInput2"
+                   placeholder="Another input placeholder">
+        </div>
+        <div class="container">
+            <button class="btn btn-primary active" type="submit">UPDATE</button>
+        </div>
+    </div>
+</form>
+{% endblock %}
