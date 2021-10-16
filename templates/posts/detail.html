@@ -97,7 +97,7 @@
         </div>
         <div class="comments-area">
             <h4>{{ posts.comment.all.count }} Comments</h4>
-            {% for comment in posts.comment_post.all %}
+            {% for comment in posts.get_parent %}
                 <div class="comment-list">
                     <div class="single-comment justify-content-between d-flex">
                         <div class="user justify-content-between d-flex">
@@ -142,7 +142,7 @@
                         </div>
                         <button type="submit" class="btn btn-success">Send comment</button>
                     </form>
-                {% endfor %}
+            {% endfor %}
         </div>
         <div class="comment-form">
             <h4>Comment</h4>

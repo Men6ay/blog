@@ -64,12 +64,13 @@ def detail(request,id):
         if 'comment' in request.POST:
             try:
                 text = request.POST.get('text')
-                comment_obj = Comment.objects.create(user=request.user, post =posts, text=text)
+                comment_obj = Comment.objects.create(user=request.user, post=posts, text=text)
                 return redirect('detail', posts.id)
             except:
                 print('Error')
         if 'comments_comment' in request.POST:
             id = int(request.POST.get('comments_comment'))
+            print(id)
             comment_obj = Comment.objects.get(id=id)
             try:
                 text = request.POST.get('text')
