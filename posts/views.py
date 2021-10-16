@@ -65,9 +65,18 @@ def detail(request,id):
             try:
                 text = request.POST.get('text')
                 comment_obj = Comment.objects.create(user=request.user, post =posts, text=text)
-                return redirect('index')
+                return redirect('detail', posts.id)
             except:
                 print('Error')
+        if 'comments_comment' in request.POST:
+            id = int(request.POST.get('comments_comment'))
+            comment_obj = Comment.objects.get(id=id)
+            try:
+                text = request.POST.get('text')
+                comment_create = Comment.objects.create(user=request.user, post=posts,text=text,parent=comment_obj)
+                return redirect('detail', posts.id)
+            except:
+                print('ERROR')
         if 'like' in request.POST:
             try:
                 like = Like.objects.get(user=request.user,post = posts)

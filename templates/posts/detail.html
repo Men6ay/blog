@@ -20,7 +20,7 @@
                         <div class="d-flex">
                             <img src="{% static 'img/blog/user-img.jpg' %}" alt="">
                         </div>
-                    </div>      
+                    </div>
                 </div>
             </div>
             <p>{{ posts.description }}</p>
@@ -33,6 +33,7 @@
                     <a href="{% url 'delete' posts.id %}">
                         <button class="btn btn-danger">Delete</button>
                     </a>
+
                 </div>
             {% else %}
             {% endif %}
@@ -54,8 +55,48 @@
                 <a class="justify-content-center ml-auto" href="#">
                     <i class="lnr lnr lnr-bubble"></i>{{ posts.comment.all.count }}
                     Comments</a>
+                <div class="news_socail ml-auto">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                    <a href="#"><i class="fa fa-rss"></i></a>
+                </div>
             </div>
+        </div>
+        <div class="navigation-area">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                    <div class="thumb">
+                        <a href="#"><img class="img-fluid" src="img/blog/prev.jpg" alt=""></a>
+                    </div>
+                    <div class="arrow">
+                        <a href="#"><span class="lnr text-white lnr-arrow-left"></span></a>
+                    </div>
+                    <div class="detials">
+                        <p>Prev Post</p>
+                        <a href="#">
+                            <h4>A Discount Toner</h4>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                    <div class="detials">
+                        <p>Next Post</p>
+                        <a href="#">
+                            <h4>Cartridge Is Better</h4>
+                        </a>
+                    </div>
+                    <div class="arrow">
+                        <a href="#"><span class="lnr text-white lnr-arrow-right"></span></a>
+                    </div>
+                    <div class="thumb">
+                        <a href="#"><img class="img-fluid" src="img/blog/next.jpg" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="comments-area">
+            <h4>{{ posts.comment.all.count }} Comments</h4>
             {% for comment in posts.comment_post.all %}
                 <div class="comment-list">
                     <div class="single-comment justify-content-between d-flex">
@@ -69,38 +110,56 @@
                                 <p class="comment">
                                     {{ comment.text }}
                                 </p>
-                                {% if user.is_authenticated %}
-                                    <div class="container">
-                                    <a href="{% url 'update_comment' comment.id %}">
-                                        <button class="btn btn-success">Update</button>
-                                    </a>
-                                    <a href="{% url 'delete_comment' comment.id %}">
-                                        <button class="btn btn-danger">Delete</button>
-                                    </a>
-                                    </div>
-                                {% else %}
-                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
-            <div class="comment-form">
-                <h4>Comment</h4>
-                {% if user.is_authenticated %}
+                    {% for reply in comment.comments_comment.all %}
+                        <div class="comment-list left-padding">
+                            <div class="single-comment justify-content-between d-flex">
+                                <div class="user justify-content-between d-flex">
+                                    <div class="thumb">
+                                        <img src="img/blog/c2.jpg" alt="">
+                                    </div>
+                                    <div class="desc">
+                                        <h5><a href="#">{{ reply.user }}</a></h5>
+                                        <p class="date">December 4, 2017 at 3:12 pm </p>
+                                        <p class="comment">
+                                            {{ reply.text }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                     <form method="post">
                         {% csrf_token %}
                         <div class="form-group">
-                            <input type="hidden" name="comment">
+                            <input type="hidden" name="comments_comment" value="{{ comment.id }}">
                             <textarea class="form-control mb-10" rows="5" name="text" placeholder="Messege"
-                                      onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
-                                      required=""></textarea>
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
+                                    required=""></textarea>
                         </div>
                         <button type="submit" class="btn btn-success">Send comment</button>
                     </form>
-                {% else %}
-                    <h4 style="color: red">Login user or Register to send message</h4>
-                {% endif %}
-            </div>
+                {% endfor %}
+        </div>
+        <div class="comment-form">
+            <h4>Comment</h4>
+            {% if user.is_authenticated %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" name="comment">
+                        <textarea class="form-control mb-10" rows="5" name="text" placeholder="Messege"
+                                  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
+                                  required=""></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Send comment</button>
+                </form>
+            {% else %}
+                <h4 style="color: red">Login user or Register to send message</h4>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
